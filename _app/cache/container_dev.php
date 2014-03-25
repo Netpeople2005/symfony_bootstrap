@@ -49,7 +49,7 @@ class ContainerDev extends Container
      */
     protected function getControllerResolverService()
     {
-        return $this->services['controller_resolver'] = new \Application\Controller\ControllerResolver('D:\\wamp\\www\\optime\\symfony_bootstrap\\_app/../', NULL);
+        return $this->services['controller_resolver'] = new \Application\Controller\ControllerResolver('D:\\wamp\\www\\optime\\symfony_bootstrap\\_app/../', array(0 => 'request'));
     }
 
     /**
@@ -116,9 +116,9 @@ class ContainerDev extends Container
     protected function getDefaultParameters()
     {
         return array(
-            'controllers_dir' => 'D:\\wamp\\www\\optime\\symfony_bootstrap\\_app/../',
             'root_dir' => 'D:\\wamp\\www\\optime\\symfony_bootstrap\\_app',
             'debug' => true,
+            'environment' => 'dev',
         );
     }
 }

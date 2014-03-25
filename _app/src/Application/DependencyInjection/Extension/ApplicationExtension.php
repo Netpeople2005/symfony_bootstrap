@@ -11,8 +11,9 @@
 
 namespace Application\DependencyInjection\Extension;
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * @author Manuel Aguirre <programador.manuel@gmail.com>
@@ -31,9 +32,25 @@ class ApplicationExtension extends Extension
 
     public function load(array $config, ContainerBuilder $container)
     {
-        //ahora es en la extensión donde establecemos los parametros
-        $container->setParameter('root_dir', $this->rootDir);
-        $container->setParameter('debug', $this->isDebug);
+        $configuration = $this->getConfiguration($config, $container);
+        $config = $this->processConfiguration($configuration, $config);
+
+        $loader = new YamlFileLoader($container, new FileLocator($this->rootDir . '/config/'));
+        $loader->load('services/app.yml');
+
+        $this->configControllerResolver($config, $container);
+    }
+
+    protected function configControllerResolver(array $config, ContainerBuilder $container)
+    {
+        if (!$container->hasDefinition('controller_resolver')) {
+            return;
+        }
+
+        $definition = $container->getDefinition('controller_resolver');
+
+        $definition->replaceArgument('0', $config['controller_dir']);
+        $definition->replaceArgument('1', $config['globals']);
     }
 
 }

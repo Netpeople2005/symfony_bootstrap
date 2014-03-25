@@ -7,5 +7,5 @@ services:
     controller_resolver:
         class: Application\Controller\ControllerResolver
         arguments:
-            - %controllers_dir%
+            - %root_dir%/../
             - @?logger

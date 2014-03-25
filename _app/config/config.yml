@@ -1,5 +1,9 @@
-imports:
-    - { resource: services/app.yml }
+#imports:
+#    - { resource: services/app.yml }
     
-parameters:
-    controllers_dir: %root_dir%/../
+application:
+    controller_dir: %root_dir%/../
+    globals: 
+        # Aca definimos las variables globales que queremos tener disponibles en los controladores.
+        - request
+        
