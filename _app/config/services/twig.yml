@@ -6,6 +6,7 @@ services:
         class: Twig_Environment
         arguments:
             - @twig.loader.filesystem
+            - %twig.options%
 #        calls:
 #            - [setLogger, [@logger]]
             
@@ -48,10 +49,10 @@ services:
 #        tags:
 #            - {name: twig.extension}
             
-    twig.extension.text:
-        class: Twig_Extensions_Extension_Text
-        tags:
-            - {name: twig.extension}
+#    twig.extension.text:
+#        class: Twig_Extensions_Extension_Text
+#        tags:
+#            - {name: twig.extension}
             
 #    twig.extension.php_functions:
 #        class: Optime\Twig\Extension\PhpFuntionsExtension

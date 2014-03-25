@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
 
 class App
@@ -54,13 +55,15 @@ class App
 
     public static function render($view, array $params = array())
     {
-        return static::get('twig')->render($view, $params);
+        $content = static::get('twig')->render($view, $params);
+        
+        return new Response($content);
     }
 
     protected function createContainer($environment, $debug)
     {
         $rootDir = $this->getRootDir();
-        $file = $rootDir . '/cache/container_' . $environment . '.php';
+        $file = $rootDir . '/_app/cache/container_' . $environment . '.php';
         $containerClass = 'Container' . ucfirst($environment);
         $containerConfigCache = new ConfigCache($file, $debug);
 
@@ -69,11 +72,12 @@ class App
                 'root_dir' => $rootDir,
                 'debug' => $debug,
                 'environment' => $environment,
+                'cache_dir' => $rootDir . '/_app/cache/',
             )));
 
             $this->prepareExtensions($this, $containerBuilder);
 
-            $loader = new YamlFileLoader($containerBuilder, new FileLocator($rootDir . '/config/'));
+            $loader = new YamlFileLoader($containerBuilder, new FileLocator($rootDir . '/_app/config/'));
             $loader->load('config.yml');
 
             $containerBuilder->compile();
@@ -88,7 +92,7 @@ class App
 
     public function getRootDir()
     {
-        return dirname(__DIR__);
+        return dirname(dirname(__DIR__));
     }
 
     public function getDebug()
@@ -103,7 +107,7 @@ class App
 
     protected function prepareExtensions(App $app, ContainerBuilder $containerBuilder)
     {
-        $config = require $this->getRootDir() . '/configuration.php';
+        $config = require $this->getRootDir() . '/_app/configuration.php';
 
         foreach ($config['extensions'] as $extension) {
             //registramos las extensiones en el container

@@ -47,9 +47,9 @@ class TwigExtension extends Extension
         $this->addPaths($configs, $container);
         $this->addGlobals($configs, $container);
 
-        unset($config['globals']);
+        unset($configs['globals'], $configs['paths']);
 
-        $container->setParameter('twig.options', $config);
+        $container->setParameter('twig.options', $configs);
     }
 
     public function getAlias()
@@ -72,7 +72,7 @@ class TwigExtension extends Extension
     protected function addGlobals(array $config, ContainerBuilder $container)
     {
         $twig = $container->getDefinition('twig');
-        
+
         if (!empty($config['globals'])) {
             $def = $container->getDefinition('twig');
             foreach ($config['globals'] as $key => $global) {

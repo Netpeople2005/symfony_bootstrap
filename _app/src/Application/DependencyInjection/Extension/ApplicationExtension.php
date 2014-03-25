@@ -30,6 +30,8 @@ class ApplicationExtension extends Extension
         $loader->load('services/app.yml');
 
         $this->configControllerResolver($config, $container);
+        
+        $container->setParameter('charset', $config['charset']);
     }
 
     protected function configControllerResolver(array $config, ContainerBuilder $container)

@@ -2,8 +2,7 @@
 #    - { resource: services/app.yml }
     
 application:
-    controller_dir: %root_dir%/../
-    cache_dir: %root_dir%/cache/
+    controller_dir: %root_dir%
     charset: utf-8
     globals: 
         # Aca definimos las variables globales que queremos tener disponibles en los controladores.
@@ -11,10 +10,11 @@ application:
         
         
 twig:
+    debug:            %debug%
+    strict_variables: %debug%
     globals:
-        prueba: @event_dispatcher
     paths:
-        %root_dir%src/views:
-        %root_dir%src/views/_shared/templates: templates
-        %root_dir%src/views/_shared/partials: partials
-        %root_dir%src/views/_shared/macros: macros
+        %root_dir%/_views:
+        %root_dir%/_views/_shared/templates: templates
+        %root_dir%/_views/_shared/partials: partials
+        %root_dir%/_views/_shared/macros: macros
