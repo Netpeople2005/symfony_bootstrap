@@ -1,0 +1,5 @@
+imports:
+    - { resource: services.yml }
+    
+parameters:
+    controllers_dir: %root_dir%/../

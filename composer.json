@@ -1,0 +1,17 @@
+{
+    "require": {
+        "symfony/http-foundation": "*",
+        "symfony/routing": "*",
+        "symfony/dependency-injection": "*",
+        "symfony/event-dispatcher": "*",
+        "symfony/debug": "*",
+        "symfony/yaml": "*",
+        "symfony/http-kernel": "*",
+        "symfony/config": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "": ["_app/src/"]
+        }
+    }
+}
