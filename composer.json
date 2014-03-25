@@ -7,7 +7,9 @@
         "symfony/debug": "*",
         "symfony/yaml": "*",
         "symfony/http-kernel": "*",
-        "symfony/config": "*"
+        "symfony/config": "*",
+        "twig/twig": "*"
+        
     },
     "autoload": {
         "psr-0": {

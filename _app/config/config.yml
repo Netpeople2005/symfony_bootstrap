@@ -3,7 +3,18 @@
     
 application:
     controller_dir: %root_dir%/../
+    cache_dir: %root_dir%/cache/
+    charset: utf-8
     globals: 
         # Aca definimos las variables globales que queremos tener disponibles en los controladores.
         - request
         
+        
+twig:
+    globals:
+        prueba: @event_dispatcher
+    paths:
+        %root_dir%src/views:
+        %root_dir%src/views/_shared/templates: templates
+        %root_dir%src/views/_shared/partials: partials
+        %root_dir%src/views/_shared/macros: macros

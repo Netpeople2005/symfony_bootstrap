@@ -29,6 +29,8 @@ class ApplicationConfiguration implements ConfigurationInterface
 
         $rootNode->children()
                     ->scalarNode('controller_dir')->end()
+                    ->scalarNode('cache_dir')->end()
+                    ->scalarNode('charset')->end()
                     ->arrayNode('globals')
                         ->prototype('scalar')
                     ->end()

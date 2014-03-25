@@ -1,1 +1,62 @@
-
+services:    
+    twig.loader.filesystem:
+        class: Twig_Loader_Filesystem
+    
+    twig:
+        class: Twig_Environment
+        arguments:
+            - @twig.loader.filesystem
+#        calls:
+#            - [setLogger, [@logger]]
+            
+#    twig.extension.assets:
+#        class: Optime\Twig\Extension\AssetsExtension
+#        tags:
+#            - {name: twig.extension}
+            
+#    twig.extension.translation:
+#        class: Optime\Twig\Extension\TranslationExtension
+#        arguments:
+#            - @request
+#            - %charset%
+#        tags:
+#            - {name: twig.extension}
+            
+#    twig.extension.routing:
+#        class: Optime\Twig\Extension\RoutingExtension
+#        arguments:
+#            - @router
+#        tags:
+#            - {name: twig.extension}
+            
+#    twig.extension.security:
+#        class: Optime\Twig\Extension\SecurityExtension
+#        factory_class: Optime\Twig\Extension\SecurityExtension
+#        factory_method: createExtension
+#        arguments:
+#            - @session
+#        tags:
+#            - {name: twig.extension}
+            
+    twig.extension.debug:
+        class: Twig_Extension_Debug
+        tags:
+            - {name: twig.extension}
+            
+#    twig.extension.validation:
+#        class: Optime\Twig\Extension\ValidationExtension
+#        tags:
+#            - {name: twig.extension}
+            
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - {name: twig.extension}
+            
+#    twig.extension.php_functions:
+#        class: Optime\Twig\Extension\PhpFuntionsExtension
+#        tags:
+#            - {name: twig.extension}
+        
+        
+            

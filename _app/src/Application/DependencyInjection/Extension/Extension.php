@@ -43,4 +43,8 @@ abstract class Extension extends BaseExtension
         return null;
     }
 
+    protected function getConfigDir()
+    {
+        return __DIR__ . '/../../../../config/';
+    }
 }

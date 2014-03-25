@@ -21,21 +21,12 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class ApplicationExtension extends Extension
 {
 
-    protected $rootDir;
-    protected $isDebug;
-
-    public function __construct($rootDir, $isDebug)
-    {
-        $this->rootDir = $rootDir;
-        $this->isDebug = $isDebug;
-    }
-
     public function load(array $config, ContainerBuilder $container)
     {
         $configuration = $this->getConfiguration($config, $container);
         $config = $this->processConfiguration($configuration, $config);
 
-        $loader = new YamlFileLoader($container, new FileLocator($this->rootDir . '/config/'));
+        $loader = new YamlFileLoader($container, new FileLocator($this->getConfigDir()));
         $loader->load('services/app.yml');
 
         $this->configControllerResolver($config, $container);
