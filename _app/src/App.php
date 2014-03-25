@@ -63,7 +63,7 @@ class App
     protected function createContainer($environment, $debug)
     {
         $rootDir = $this->getRootDir();
-        $file = $rootDir . '/_app/cache/container_' . $environment . '.php';
+        $file = $rootDir . '/_app/cache/classes/container_' . $environment . '.php';
         $containerClass = 'Container' . ucfirst($environment);
         $containerConfigCache = new ConfigCache($file, $debug);
 

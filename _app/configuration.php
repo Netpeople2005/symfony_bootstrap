@@ -5,6 +5,7 @@
 use Application\DependencyInjection\Compiler\TwigCompilerPass;
 use Application\DependencyInjection\Extension\ApplicationExtension;
 use Application\DependencyInjection\Extension\TwigExtension;
+use Symfony\Component\HttpKernel\DependencyInjection\RegisterListenersPass;
 
 return array(
     'extensions' => array(
@@ -13,6 +14,7 @@ return array(
     ),
     'compilers' => array(
         new TwigCompilerPass(),
+        new RegisterListenersPass(),
     ),
 );
 

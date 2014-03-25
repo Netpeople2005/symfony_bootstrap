@@ -8,8 +8,4 @@ $request = Request::createFromGlobals();
 
 $app = new App('dev', true);
 
-$request->attributes->add(array(
-    '_file' => 'home.php',
-));
-
 $app->run($request);

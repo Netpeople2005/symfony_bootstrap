@@ -1,0 +1,37 @@
+parameters:
+    router.routes_file: %root_dir%/_app/config/routes/routing.yml
+    
+services:
+    request_context:
+        class: Symfony\Component\Routing\RequestContext
+        
+    router.locator:
+        class: Symfony\Component\Config\FileLocator
+        public: false
+        arguments:
+            - [%root_dir%]
+        
+    router.loader.yml:
+        class: Symfony\Component\Routing\Loader\YamlFileLoader
+        public: false
+        arguments:
+            - @router.locator
+        
+    router:
+        class: Symfony\Component\Routing\Router
+        arguments:
+            - @router.loader.yml
+            - %router.routes_file%
+            - {debug: %debug%, cache_dir: %cache_dir%classes}
+            - @request_context
+        
+    router.listener:
+        class: Symfony\Component\HttpKernel\EventListener\RouterListener
+        arguments:
+            - @router
+            - @request_context
+            - @?logger
+        tags:
+            - { name: kernel.event_subscriber }
+            
+         
