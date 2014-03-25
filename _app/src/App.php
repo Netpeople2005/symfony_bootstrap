@@ -1,8 +1,9 @@
 <?php
 
-use Controller\ControllerResolver;
+use Application\DependencyInjection\Compiler\MergeExtensionsPass;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -14,21 +15,22 @@ class App
 {
 
     /**
-     *
      * @var ContainerInterface
      */
     protected static $container;
 
     public function __construct($environment, $debug = true)
     {
+        Debug::enable();
+        
         static::$container = self::createContainer($environment, $debug);
     }
 
     public function run(Request $request)
     {
-        $controllerResolver = new ControllerResolver(static::getparameter('controllers_dir'));
 
-        $kernel = new HttpKernel(static::get('event_dispatcher'), $controllerResolver);
+        $kernel = new HttpKernel(static::get('event_dispatcher')
+                , static::get('controller_resolver'));
 
         $response = $kernel->handle($request);
         $response->send();
@@ -59,17 +61,20 @@ class App
 
         if (!$containerConfigCache->isFresh()) { //si no está actualizado
             $containerBuilder = new ContainerBuilder();
-            $containerBuilder->setParameter('root_dir', $rootDir);
 
-//            $config = require_once APP_PATH . 'container_configuration.php';
-//
-//            foreach ($config['extensions'] as $extension) {
-//                $containerBuilder->registerExtension($extension); //registramos las extensiones en el container
-//            }
-//
-//            foreach ($config['compilers'] as $compiler) {
-//                $containerBuilder->addCompilerPass($compiler); //registramos los compilers en el container
-//            }
+            $config = require $rootDir . '/configuration.php';
+
+            foreach ($config['extensions'] as $extension) {
+                $containerBuilder->registerExtension($extension); //registramos las extensiones en el container
+            }
+
+            foreach ($config['compilers'] as $compiler) {
+                $containerBuilder->addCompilerPass($compiler); //registramos los compilers en el container
+            }
+
+            $containerBuilder->getCompiler()
+                    ->getPassConfig()
+                    ->setMergePass(new MergeExtensionsPass());
 
             $loader = new YamlFileLoader($containerBuilder, new FileLocator($rootDir . '/config/'));
             $loader->load('config.yml');

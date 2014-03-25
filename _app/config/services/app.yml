@@ -3,3 +3,9 @@ services:
         class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
         arguments:
             - @service_container #inyectamos el container
+            
+    controller_resolver:
+        class: Application\Controller\ControllerResolver
+        arguments:
+            - %controllers_dir%
+            - @?logger

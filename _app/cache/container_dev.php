@@ -32,10 +32,24 @@ class ContainerDev extends Container
         $this->scopes = array();
         $this->scopeChildren = array();
         $this->methodMap = array(
+            'controller_resolver' => 'getControllerResolverService',
             'event_dispatcher' => 'getEventDispatcherService',
         );
 
         $this->aliases = array();
+    }
+
+    /**
+     * Gets the 'controller_resolver' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Application\Controller\ControllerResolver A Application\Controller\ControllerResolver instance.
+     */
+    protected function getControllerResolverService()
+    {
+        return $this->services['controller_resolver'] = new \Application\Controller\ControllerResolver('D:\\wamp\\www\\optime\\symfony_bootstrap\\_app/../', NULL);
     }
 
     /**
@@ -102,8 +116,9 @@ class ContainerDev extends Container
     protected function getDefaultParameters()
     {
         return array(
-            'root_dir' => 'D:\\www\\symfony_components\\_app',
-            'controllers_dir' => 'D:\\www\\symfony_components\\_app/../',
+            'controllers_dir' => 'D:\\wamp\\www\\optime\\symfony_bootstrap\\_app/../',
+            'root_dir' => 'D:\\wamp\\www\\optime\\symfony_bootstrap\\_app',
+            'debug' => true,
         );
     }
 }
