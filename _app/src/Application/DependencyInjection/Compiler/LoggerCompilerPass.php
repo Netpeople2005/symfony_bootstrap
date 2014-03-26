@@ -16,14 +16,20 @@ class LoggerCompilerPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container)
     {
-        if ($container->getParameter('debug')) {
-            $logger = $container->getDefinition('logger');
+        $debug = $container->getParameter('debug');
+
+        $services = $container->findTaggedServiceIds('logger.handler');
+
+        $definition = $container->getDefinition('logger');
+        foreach ($services as $id => $config) {
             
-            $container->register('logger.handler.phpfire', 'Monolog\\Handler\\FirePHPHandler');
-            $container->register('logger.handler.chromephp', 'Monolog\\Handler\\ChromePHPHandler');
+            if (isset($config['debug']) and !$debug) {
+                continue;
+            }
             
-            $logger->addMethodCall('pushHandler', array(new Reference('logger.handler.phpfire')));
-            $logger->addMethodCall('pushHandler', array(new Reference('logger.handler.chromephp')));
+            //solo registramos si es debug o si el handler no es condicionado a debug
+            
+            $definition->addMethodCall('pushHandler', array(new Reference($id)));
         }
     }
 

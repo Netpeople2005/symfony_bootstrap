@@ -1,15 +1,25 @@
 services:
-    logger.handler.stream:
-        class: Monolog\Handler\StreamHandler
-        arguments:
-            - %cache_path%
-            - 'moto_log.log'
-
     logger:
         class: Monolog\Logger
         arguments:
-            - moto_logger
-        calls:
+            - app_logger
+
+    logger.handler.stream:
+        class: Monolog\Handler\StreamHandler
+        arguments:
+            - %root_dir%/_app/logs/%environment%.log
+        tags:
+            - { name: logger.handler }
+            
+    logger.handler.phpfire: 
+        class: Monolog\Handler\FirePHPHandler
+        tags:
+            - { name: logger.handler, debug: true }
+            
+    logger.handler.chromephp: 
+        class: Monolog\Handler\ChromePHPHandler
+        tags:
+            - { name: logger.handler, debug: true }
             
 #    logger.exception_listener:
 #        class: Optime\Listener\ExceptionListener

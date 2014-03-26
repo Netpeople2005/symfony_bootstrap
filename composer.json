@@ -8,7 +8,8 @@
         "symfony/yaml": "*",
         "symfony/http-kernel": "*",
         "symfony/config": "*",
-        "twig/twig": "*"
+        "twig/twig": "*",
+        "monolog/monolog": "1.7.*@dev"
         
     },
     "autoload": {

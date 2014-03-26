@@ -1,5 +1,6 @@
 imports:
     - { resource: services/routing.yml }
+    - { resource: services/logger.yml }
 
 services:
     event_dispatcher: 

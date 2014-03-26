@@ -2,6 +2,7 @@
 
 /* @var $app App */
 
+use Application\DependencyInjection\Compiler\LoggerCompilerPass;
 use Application\DependencyInjection\Compiler\TwigCompilerPass;
 use Application\DependencyInjection\Extension\ApplicationExtension;
 use Application\DependencyInjection\Extension\TwigExtension;
@@ -15,6 +16,7 @@ return array(
     'compilers' => array(
         new TwigCompilerPass(),
         new RegisterListenersPass(),
+        new LoggerCompilerPass(),
     ),
 );
 
