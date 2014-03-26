@@ -56,8 +56,8 @@ application:
     controller_dir: %root_dir%/../pages/
 ```
 
-Manejando variables globales
-__________
+**Manejando variables globales**
+___
 
 Muy posiblemente hagamos uso de variables globales en nuestras app, para poder seguirlas usando debemos indicar sus nombres en el **_app/config/config.yml**:
 
@@ -72,4 +72,24 @@ application:
         - security
         - pagesManager
         - ...
+```
+
+Twig
+----
+
+Para usarlo, lo hacemos mediante la clase **App**:
+
+```php
+<?php # algun/controlador.php
+
+# Para obtener o imprimir templates como strings:
+
+echo App::get("twig")->render("home.twig", array('name' => 'Manuel'));
+echo App::get("twig")->render("home.twig");
+
+# Para devolver una respuesta desde el archivo controlador:
+
+return App::render("home.twig", array('name' => 'Manuel'));
+return App::render("home.twig");
+
 ```
