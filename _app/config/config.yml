@@ -1,6 +1,3 @@
-#imports:
-#    - { resource: services/app.yml }
-    
 application:
     controller_dir: %root_dir%
     charset: utf-8

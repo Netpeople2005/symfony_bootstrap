@@ -2,3 +2,8 @@ home:
     path: /
     defaults:
         _file: home.php
+        
+home_controller:
+    path: /hello/{name}
+    defaults:
+        _controller: HomeController::indexAction

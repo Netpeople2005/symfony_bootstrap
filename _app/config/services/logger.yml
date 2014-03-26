@@ -1,0 +1,19 @@
+services:
+    logger.handler.stream:
+        class: Monolog\Handler\StreamHandler
+        arguments:
+            - %cache_path%
+            - 'moto_log.log'
+
+    logger:
+        class: Monolog\Logger
+        arguments:
+            - moto_logger
+        calls:
+            
+#    logger.exception_listener:
+#        class: Optime\Listener\ExceptionListener
+#        properties:
+#            logger: @logger
+#        tags:
+#            - {name: kernel.event_listener, event: app.exception, method: onException}
