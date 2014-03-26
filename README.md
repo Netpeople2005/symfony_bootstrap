@@ -93,3 +93,37 @@ return App::render("home.twig", array('name' => 'Manuel'));
 return App::render("home.twig");
 
 ```
+
+Servicios (DependencyInjection)
+=================
+
+Se hace uso del componente de inyeccion de dependencias de symfony, las mimas se registran en **_app/config/services/***, y se acceden desde la clase **App**:
+
+```php
+<?php # algun/controlador.php
+
+echo App::get("twig")->render("home.twig");
+
+App::get("router");
+
+App::get("session");
+
+App::get("event_dispatcher");
+App::get("service_container");
+
+
+```
+
+Parametros
+------
+
+```php
+<?php # algun/controlador.php
+
+echo App::getParameter("debug");
+echo App::getParameter("environment");
+echo App::getParameter("root_dir");
+
+
+```
+
